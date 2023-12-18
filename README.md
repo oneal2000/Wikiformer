@@ -5,7 +5,7 @@
 
 
 
-![](https://github.com/oneal2000/Wikiformer/pics/logo.png)
+![](https://github.com/oneal2000/Wikiformer/blob/main/pics/logo.png)
 
 
 
