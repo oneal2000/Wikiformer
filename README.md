@@ -171,7 +171,7 @@ If you find our work useful, please cite our paper :)
 
 
 
-$ WST = <D, R>$, where $D$ is a finite set containing $n$ nodes, and $R$ is the root node of $ WST$. Each node in $D$ consists of two parts: the subtitle and its corresponding content. The root node $R$ contains the main title and the abstract of this article. Starting from the root node $R$, recursively take all the corresponding lower-level sections as its child nodes until every section in this article is added to the $WST$. 
+$WST = <D, R>$, where $D$ is a finite set containing $n$ nodes, and $R$ is the root node of $ WST$. Each node in $D$ consists of two parts: the subtitle and its corresponding content. The root node $R$ contains the main title and the abstract of this article. Starting from the root node $R$, recursively take all the corresponding lower-level sections as its child nodes until every section in this article is added to the $WST$. 
 
 
 
