@@ -1,4 +1,5 @@
 # Wikiformer
+
 **Source code of AAAI 2024 long paper:** 
 
 **Wikiformer: Pre-training with Structured Information of Wikipedia for Ad-hoc Retrieval**
@@ -7,13 +8,14 @@
 
 [GitHub Link](https://github.com/oneal2000/Wikiformer)
 
- 
+
 
 
 
 <p align="center">
   <img src="https://github.com/oneal2000/Wikiformer/blob/main/pics/logo.png" width="50%" height="auto" />
 </p>
+
 
 
 
@@ -28,14 +30,16 @@
 }
 ```
 
-:)
+
 
 ## Introduction
 
 ### Overview
+
 Imagine a scenario: we need to design a retrieval system for an entirely new **Corpus**. This Corpus contains structured information, such as multi-level titles, topics, abstracts, and references between documents.
 
 In the design process, we will face the following challenges:
+
 - Inability to predict user queries
 - Lack of Query-Passage relevance annotations
 - Difficulty in training a retrieval model specific to this Corpus without queries
@@ -43,7 +47,9 @@ In the design process, we will face the following challenges:
 
 
 ### Our Solution
+
 Our proposed method Wikiformer aims to customize a retrieval model for any corpus with structured information without manual supervision. Our advantages include:
+
 - There is no need for existing queries or manual annotations
 - Achieves SOTA performance
 - Broad applicability for many formats, including academic paper Corpus, Web Corpus, and Markdown.md, XML, etc.
@@ -159,18 +165,6 @@ If you find our work useful, please cite our paper :)
 
 
 
-## Links to Related Works
-
-**PROP\_MS**  adopts the Representative Words Prediction (ROP) task to learn relevance matching from the pseudo-query-document pairs. It is pre-trained on MS MARCO. [Link to Code](https://github.com/Albert-Ma/PROP)
-
-**PROP\_WIKI** adopts the same pre-training task as PROP\_MS. The only difference is that PROP\_WIKI is pre-trained on Wikipedia. [Link to Code](https://github.com/Albert-Ma/PROP)
-
-**HARP** utilizes hyperlinks and anchor texts to generate pseudo-query-document pairs and achieves state-of-the-art performance on ad-hoc retrieval. [Link to Code](https://github.com/zhengyima/anchors)
-
-**ARES** is a pre-trained language model with Axiomatic Regularization for ad hoc Search. [Link to Code](https://github.com/xuanyuan14/ARES)
-
-**Webformer** is a pre-trained language model based on large-scale web pages and their DOM (Document Object Model) tree structures. [Link to Code](https://github.com/xrr233/Webformer)
-
 
 
 ## Methodology
@@ -269,9 +263,86 @@ Demo data is included in this repository at `wikiformer/data/demo_data`
 
 `wikiformer/code/SRR`
 
+
+
+##### Step1: Run `gen_data.sh` to reformat the Wikipedia articles:
+
+```
+python ./gen_data.py \
+--input_folder ../../data/demo_data \
+--output_path ./output.json \
+--log_path ./log.txt
+```
+
+
+
+Output format: json
+
+Example of a line:
+
+```json
+{
+	"title": "Foreign relations of Azerbaijan",
+	"docid": "1087",
+	"section_list": [{
+		"subtitle": "Diplomatic relations.",
+		"level": 2,
+		"merged_title": ["Foreign relations of Azerbaijan", "Diplomatic relations."],
+		"text": "As of 2019, Azerbaijan maintains diplomatic relations with 182 United Nations member states, the State of Palestine and the Holy See. Azerbaijan does not have diplomatic relations with the following countries: Azerbaijan also maintains good relations with the European Union, in the framework of its Eastern European Neighbourhood Policy (\"See Azerbaijan and the European Union\")."
+	}, {
+		"subtitle": "International organizations.",
+		"level": 2,
+		"merged_title": ["Foreign relations of Azerbaijan", "International organizations."],
+		"text": "AsDB BSEC CE CIS EAPC EBRD ECE ECO ESCAP FAO GUAM IAEA IBRD ICAO ICRM IDA IDB IFAD IFC IFRCS ILO IMF IMO Interpol IOC, IOM ISO (correspondent) ITU ITUC OAS (observer) OIC OPCW OSCE PFP United Nations UNCTAD UNESCO UNIDO UPU WCO WFTU WHO WIPO WMO WToO WTrO(observer)"
+	}, {
+		"subtitle": "Disputes.",
+		"level": 2,
+		"merged_title": ["Foreign relations of Azerbaijan", "Disputes."],
+		"text": ""
+	}, {
+		"subtitle": "Nagorno-Karabakh/Azerbaijan.",
+		"level": 3,
+		"merged_title": ["Foreign relations of Azerbaijan", "Disputes.", "Nagorno-Karabakh/Azerbaijan."],
+		"text": "The frozen conflict over currently largely Armenian-populated region of Nagorno-Karabakh within the Republic of Azerbaijan began when in 1988 the Armenian majority of Nagorno-Karabakh demanded autonomy with demonstrations and persecutions against ethnic Azeris following in Armenia. This led to anti-Armenian rioting in Azerbaijan, with Azerbaijani militias beginning their effort to expel Armenians from the enclave. In 1992 a war broke out and pogroms of Armenians and Azeris forced both groups to flee their homes. In 1994, a Russian-brokered ceasefire ended the war but more than 1 million ethnic Armenians and Azeris are still not able to return home. The conflict over Nagorno-Karabakh remains unresolved despite negotiations, that are ongoing since 1992 under the aegis of the Minsk Group of the OSCE, to resolve the conflict peacefully."
+	}, {
+		"subtitle": "Caviar diplomacy.",
+		"level": 3,
+		"merged_title": ["Foreign relations of Azerbaijan", "Disputes.", "Caviar diplomacy."],
+		"text": "The European Stability Initiative (ESI) has revealed in a report from 2012 with the title \"Caviar diplomacy: How Azerbaijan silenced the Council of Europe\", that since Azerbaijan's entry into the Council of Europe, each year 30 to 40 deputies are invited to Azerbaijan and generously paid with expensive gifts, including caviar (worth up to 1.400 euro), silk carpets, gold, silver and large amounts of money. In return they become lobbyists for Azerbaijan. This practice has been widely referred to as \"Caviar diplomacy\". ESI also published a report on 2013 Presidential elections in Azerbaijan titled \"Disgraced: Azerbaijan and the end of election monitoring as we know it\". The report revealed the ties between Azerbaijani government and the members of certain observation missions who praised the elections. Azerbaijan's \"Caviar diplomacy\" at 2013 presidential elections sparked a major international scandal, as the reports of two authoritative organizations Parliamentary Assembly of the Council of Europe/European Parliament and OSCE/ODIHR completely contradicted one another in their assessments of elections. Non-governmental anti-corruption organization Transparency International has regularly judged Azerbaijan to be one of the most corrupt countries in the world and has also criticized Azerbaijan for the \"Caviar diplomacy\". At June 2016 the public prosecutor of Milan has accused the former leader of the (Christian) Union of the center and of the European People's Party of the Parliamentary Assembly of the Council of Europe Luca Volonte of accepting large bribes from representatives of the Azerbaijani government. Two people with high-level experience of the Council of Europe's parliamentary assembly (Pace) have told the Guardian they believe its members have been offered bribes for votes by Azerbaijan. Former Azerbaijani diplomat, Arif Mammadov, alleged that a member of Azerbaijan's delegation at the Council of Europe had \u20ac30m (\u00a325m) to spend on lobbying its institutions, including the Council of Europe assembly. PACE ratified the terms of reference of an independent external investigation body to carry out a detailed independent inquiry into the allegations of corruption at the council involving Azerbaijan."
+	}, {
+		"subtitle": "ESISC report.",
+		"level": 4,
+		"merged_title": ["Foreign relations of Azerbaijan", "Disputes.", "Caviar diplomacy.", "ESISC report."],
+		"text": "On 6 March 2017, ESISC (European Strategic Intelligence and Security Center) published a scandalous report called \"The Armenian Connection\" where it veraciously attacked human rights NGOs and research organisations criticising human rights violations and corruption in Azerbaijan, Turkey, and Russia. ESISC in that report asserted that \"Caviar diplomacy\" report elaborated by ESI aimed to create climate of suspicion based on slander to form a network of MPs that would engage in a political war against Azerbaijan. In the Second Chapter of the report called \"The Armenian Connection: \u00abMr X\u00bb, Nils Mui\u017enieks, Council of Europe Commissioner for Human Rights\" that was published on 18 April 2017 ESISC asserted that the network composed of European PMs, Armenian officials and some NGOs: Human Rights Watch, Amnesty International, \"Human Rights House Foundation\", \"Open Dialog\", European Stability Initiative, and Helsinki Committee for Human Rights, was financed by the Soros Foundation. According to ESISC the key figure of the network since 2012 has been Nils Mui\u017enieks, Commissioner for Human Rights of the Council of Europe and the network has served to the interests of George Soros and the Republic of Armenia. \"The report is written in the worst traditions of authoritarian propaganda, makes absurd claims, and is clearly aimed at deflecting the wave of criticism against cover-up of unethical lobbying and corruption in PACE and demands for change in the Assembly\", said Freedom Files Analytical Centre. According Robert Coalson (Radio Free Europe), ESISC is a part of Baku's lobbying efforts to extend to the use of front think tanks to shift public opinion. European Stability Initiative said that \"ESISC report is full of lies (such as claiming that German PACE member Strasser holds pro-Armenian views and citing as evidence that he went to Yerevan in 2015 to commemorate the Armenian genocide, when Strasser has never in his life been to independent Armenia)\"."
+	}],
+	"max_level": 4,
+	"abstract": ["", "The Republic of Azerbaijan is a member of the United Nations, the Non-Aligned Movement, the Organization for Security and Cooperation in Europe, NATO's Partnership for Peace, the Euro-Atlantic Partnership Council, the World Health Organization, the European Bank for Reconstruction and Development; the Council of Europe, CFE Treaty, the Community of Democracies; the International Monetary Fund; and the World Bank.", "The major trends in the foreign relations of the Republic of Azerbaijan toward both global and regional powers active in Caucasus area. External variables are categorized depending on their original nature into two groups: global and regional. The former category includes global players such as Moscow and Washington, while the latter category rival regional players, namely Ankara and Tehran. Azerbaijan has formal involvement with senior ex-U.S. government officials including James Baker and Henry Kissinger, as they serve on the Honorary Council of Advisors of the U.S.-Azerbaijan Chamber of Commerce (USACC). USACC is co-chaired by Tim Cejka, President of ExxonMobil and Reza Vaziri, President of R.V. Investment Group and Chairman of the Anglo Asian Mining Plc (LSE Ticker: AAZ)."],
+	"error": 0
+}
+```
+
+
+
+##### Step2: Contrastive Sampling Strategy
+
+`Wikiformer/code/SRR/contrastive_sampling.py`
+
+
+
 #### RWI Task
 
 `wikiformer/code/RWI`
+
+##### Run `gen_data.sh` to reformat the Wikipedia articles:
+
+```
+python ./gen_data.py \
+--input_folder ../../data/demo_data \
+--output_path ./output.json \
+--log_path ./log.txt
+```
+
+
 
 #### ATI Task
 
@@ -280,3 +351,20 @@ Demo data is included in this repository at `wikiformer/data/demo_data`
 #### LTM Task
 
 `wikiformer/code/LTM`
+
+
+
+
+
+## Links to Related Works
+
+**PROP\_MS**  adopts the Representative Words Prediction (ROP) task to learn relevance matching from the pseudo-query-document pairs. It is pre-trained on MS MARCO. [Link to Code](https://github.com/Albert-Ma/PROP)
+
+**PROP\_WIKI** adopts the same pre-training task as PROP\_MS. The only difference is that PROP\_WIKI is pre-trained on Wikipedia. [Link to Code](https://github.com/Albert-Ma/PROP)
+
+**HARP** utilizes hyperlinks and anchor texts to generate pseudo-query-document pairs and achieves state-of-the-art performance on ad-hoc retrieval. [Link to Code](https://github.com/zhengyima/anchors)
+
+**ARES** is a pre-trained language model with Axiomatic Regularization for ad hoc Search. [Link to Code](https://github.com/xuanyuan14/ARES)
+
+**Webformer** is a pre-trained language model based on large-scale web pages and their DOM (Document Object Model) tree structures. [Link to Code](https://github.com/xrr233/Webformer)
+
