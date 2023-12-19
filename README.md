@@ -9,6 +9,19 @@
 
 
 
+```
+@misc{su2023wikiformer,
+      title={Wikiformer: Pre-training with Structured Information of Wikipedia for Ad-hoc Retrieval}, 
+      author={Weihang Su and Qingyao Ai and Xiangsheng Li and Jia Chen and Yiqun Liu and Xiaolong Wu and Shengluan Hou},
+      year={2023},
+      eprint={2312.10661},
+      archivePrefix={arXiv},
+      primaryClass={cs.IR}
+}
+```
+
+
+
 ## Introduction
 
 ### Overview
@@ -81,10 +94,10 @@ Further details about the methodology.
     <p>Welcome to our web corpus example.</p>
     
     <h2>Section 1</h2>
-    <p>Details about section 1. See <a href="#section2">Section 2</a> for more info.</p>
+    <p>Details about section 1.</p>
     
     <h2 id="section2">Section 2</h2>
-    <p>Details about section 2. Refer back to <a href="#section1">Section 1</a>.</p>
+    <p>Details about section 2. .</p>
 </body>
 </html>
 ```
@@ -96,10 +109,10 @@ Further details about the methodology.
 Welcome to our Markdown example.
 
 ## Section 1
-Details about section 1. Refer to [Section 2](#section-2) for more.
+Details about section 1. 
 
 ## Section 2
-Details about section 2. As previously mentioned in [Section 1](#section-1).
+Details about section 2. 
 ```
 
 #### XML Format
@@ -157,11 +170,11 @@ If you find our work useful, please cite our paper :)
 
 ### SRR Task
 
-
+![](https://github.com/oneal2000/Wikiformer/blob/main/pics/srr.png)
 
 ### RWI Task
 
-
+![](https://github.com/oneal2000/Wikiformer/blob/main/pics/RWI_f.png)
 
 ### ATI Task
 
@@ -169,7 +182,7 @@ If you find our work useful, please cite our paper :)
 
 ### LTM Task
 
-
+![](https://github.com/oneal2000/Wikiformer/blob/main/pics/SAG.png)
 
 
 
