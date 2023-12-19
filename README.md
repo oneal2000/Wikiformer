@@ -167,9 +167,15 @@ If you find our work useful, please cite our paper :)
 
 ## Methodology
 
+**This section briefly introduces our method; for more details, please refer to our paper.**[Paper Link](https://arxiv.org/pdf/2312.10661.pdf)
+
 ### SRR Task
 
-The SRR task is inspired by an important IR problem: document re-ranking. In general, the goal of the document re-ranking task is to sort a series of documents that are highly related to the query, and then select the ones that are most related to the query. According to the characteristics of this task, we aim to design a self-supervised learning task to select the most relevant document from a series of documents with similar contents. In the SRR task, we make full use of the hierarchical heading (multi-level title) structure of Wikipedia to achieve the above objective. Every article on Wikipedia is organized by the hierarchical heading (multi-level title) structure, the subtitle corresponding to a certain section tends to be the representative words or summarization of the text. Besides, different subsections of the same section share similar semantics. As a result, through this structure, we can obtain a series of texts that are highly similar but slightly different in content and generate the query through the multi-level titles as shown in the following Figure.
+The SRR task is inspired by an important IR problem: document re-ranking. In general, the goal of the document re-ranking task is to sort a series of documents that are highly related to the query, and then select the ones that are most related to the query. According to the characteristics of this task, we aim to design a self-supervised learning task to select the most relevant document from a series of documents with similar contents. In the SRR task, we make full use of the hierarchical heading (multi-level title) structure of Wikipedia to achieve the above objective. Every article on Wikipedia is organized by the hierarchical heading (multi-level title) structure, the subtitle corresponding to a certain section tends to be the representative words or summarization of the text. Besides, different subsections of the same section share similar semantics. As a result, through this structure, we can obtain a series of texts that are highly similar but slightly different in content and generate the query through the multi-level titles as shown in the following Figure:
+
+
+
+![](https://github.com/oneal2000/Wikiformer/blob/main/pics/SRR.png)
 
 
 
@@ -181,34 +187,7 @@ WST = <D, R>, where $D$ is a finite set containing $n$ nodes and $R$ is the root
 
 
 
-After building $WST$, we use a contrastive sampling strategy to construct pseudo query-document pairs based on the tree. For a non-leaf node $F$ in the $WST$, we add all its child nodes to the set $S$. A node $d_i$ is randomly selected from $S$. Traversing from the root node to node $d_i$, all the titles on the path are put together to form a query $q$. This process is shown in Figure \ref{fig:sep_query}. The content of the node $d_i$ is defined as $d^+$, and the content of the other nodes in $S$ is defined as $d^-$. 
-
-
-
-![](https://github.com/oneal2000/Wikiformer/blob/main/pics/SRR.png)
-
-
-
-We use a Transformer based PLM to compute the relevance score of a pseudo query-document pair:
-
-$$
-\text{Input} = [\text{CLS}] \text{query} [\text{SEP}] \text{document} [\text{SEP}]
-$$
-
-$$
-\text{score}(\text{query}, \text{document}) = \text{MLP}(\text{Transformer}(\text{Input}))
-$$
-
-where $Transformer(Input)$ is the vector representation of the "[CLS]" token. $MLP(\cdot)$ is a multi-layer perceptron that projects the [CLS] vector to a relevance score. For the loss function, we use the Softmax Cross Entropy Loss to optimize the Transformer model, which is defined as:
-
-
-
-$$
-\mathcal{L}_{SRR} = -\log\left( \frac{\exp(\text{score}(q,d^+))}{\exp(\text{score}(q,d^+)) + \sum_{d \in S} \exp(\text{score}(q,d))} \right)
-$$
-
-
-where $q$, and $d^+$ are defined above and $S$ is the set of all negative passages generated from $WST$.
+After building $WST$, we use a contrastive sampling strategy to construct pseudo-query-document pairs based on the tree. For a non-leaf node $F$ in the $WST$, we add all its child nodes to the set $S$. A node $d_i$ is randomly selected from $S$. Traversing from the root node to node $d_i$, all the titles on the path are put together to form a query $q$. This process is shown in Figure \ref{fig:sep_query}. The content of the node $d_i$ is defined as $d^+$, and the content of the other nodes in $S$ is defined as $d^-$. After this contrastive sampling, we use contrastive learning to train the model based on the above data
 
 
 
@@ -218,49 +197,19 @@ RWI task is inspired by an IR axiom which assumes that the user’s query is the
 
 
 
-Specifically, pseudo query-document pairs are organized as follows: for each Wikipedia article, we first model it as the $WST$ structure. Then we add all nodes of $WST$ except the root node to the set $S$. A node $d_i$ is randomly selected from $S$, and we define the depth of this node in $WST$ as $n$. Traversing from the root node to node $d_i$, all the titles on the path are put together to form a query $q^+$. The content of the node $d_i$ is defined as $D$. For the negative queries, we randomly select $n-1$ nodes from $S$, and concatenate the main title and subtitles of the selected nodes to define it as $q^-$. The loss function of the RWI task is defined as:
-
-
-$$
-\mathcal{L}_{RWI} = -\log\left( \frac{\exp(\text{score}(q^+,D))}{\exp(\text{score}(q^+,D)) + \sum_{q \in S} \exp(\text{score}(q,D))} \right)
-$$
-
-
-where $q^+$ is the title, $D$ is the content of that article, and $S$ is the set of all negative queries generated from that article.
-
-In this task, although both positive and negative queries contain the subtitles of the document, the positive query is more representative compared to the negative query. The model gives higher scores to the positive query through contrastive learning, so that the model can recognize the representative words in the text, and assign higher weights to these words if they are matched to the query. Therefore, through the RWI task, the model can learn how to identify the keywords in the text, which further leads to a better performance in the IR downstream task.
+Specifically, pseudo query-document pairs are organized as follows: for each Wikipedia article, we first model it as the $WST$ structure. Then we add all nodes of $WST$ except the root node to the set $S$. A node $d_i$ is randomly selected from $S$, and we define the depth of this node in $WST$ as $n$. Traversing from the root node to node $d_i$, all the titles on the path are put together to form a query $q^+$. The content of the node $d_i$ is defined as $D$. For the negative queries, we randomly select $n-1$ nodes from $S$, and concatenate the main title and subtitles of the selected nodes to define it as $q^-$. After this contrastive sampling, we use contrastive learning to train the model based on the above data
 
 ![](https://github.com/oneal2000/Wikiformer/blob/main/pics/RWI.png)
 
 ### ATI Task
 
-In the ATI task, we utilize the abstract and the inner structure of Wikipedia. The abstract (the first section) of Wikipedia is regarded as the summarization of the whole article. Compared with other sections of the same article, the abstract is more likely to meet the user’s information needs when the query is the title. Therefore, we extract the title from the Wikipedia article as the query (denoted as $q$). Then the abstract of the same article is regarded as a positive document (denoted as $d^+$). For the negative ones, we use the other sections of the same article (denoted as $d^-$). The relevance score of a pseudo query-document pair is defined in Equation \ref{equ_score}. The loss function of the ATI task is defined as:
-$$
-\mathcal{L}_{ATI} = -\log\left( \frac{\exp(\text{score}(q,d^+))}{\exp(\text{score}(q,d^+)) + \sum_{d \in S} \exp(\text{score}(q,d))} \right)
-$$
-
-
-where $q$ is the title of the article, $d^+$ is the abstract of the article, and $S$ is the set of all negative documents generated from that article.
-
-
-
-
+In the ATI task, we utilize the abstract and the inner structure of Wikipedia. The abstract (the first section) of Wikipedia is regarded as the summarization of the whole article. Compared with other sections of the same article, the abstract is more likely to meet the user’s information needs when the query is the title. Therefore, we extract the title from the Wikipedia article as the query (denoted as $q$). Then the abstract of the same article is regarded as a positive document (denoted as $d^+$). For the negative ones, we use the other sections of the same article (denoted as $d^-$). After this contrastive sampling, we use contrastive learning to train the model based on the above data
 
 ### LTM Task
 
-After pre-training with RWI, ATI, and SRR tasks, Wikiformer acquires the ability to measure the relevance between a short text (query) and a long text. This can help the model better handle the vast majority of ad-hoc retrieval tasks. However, there are also scenarios involving "long queries", such as legal case retrieval and document-to-document search. In these scenarios, the model is required to match the relevance between two long texts. Fortunately, with the structured information of Wikipedia, especially hyperlinks, we can build a series of informative pseudo long query-document pairs. To be specific, we utilize the See Also section of Wikipedia which consists of hyperlinks that link to the other articles related to or comparable to this article. The See Also section is mainly written manually, based on the judgment and common sense of the authors and editors. Thus, we can obtain a series of reliable web pages that are highly related to the content of this page.
+After pre-training with RWI, ATI, and SRR tasks, Wikiformer acquires the ability to measure the relevance between a short text (query) and a long text. This can help the model better handle the vast majority of ad-hoc retrieval tasks. However, there are also scenarios involving "long queries", such as legal case retrieval and document-to-document search. In these scenarios, the model is required to match the relevance between two long texts. Fortunately, with the structured information of Wikipedia, especially hyperlinks, we can build a series of informative pseudo-long query-document pairs. To be specific, we utilize the See Also section of Wikipedia which consists of hyperlinks that link to the other articles related to or comparable to this article. The See Also section is mainly written manually, based on the judgment and common sense of the authors and editors. Thus, we can obtain a series of reliable web pages that are highly related to the content of this page.
 
-To this end, we designed the Long Texts Matching (LTM) task to encourage the Wikiformer to learn the relevance matching ability between two long documents. Initially, we transformed the complete Wikipedia corpus into a graph structure by leveraging the interconnections provided by the 'See Also' links. This graph is designated as the See Also Graph (SAG). Each hyperlink in the See Also section can be formally represented as $(v_i, v_j)$, which means that $v_j$ appears in the See Also section of $v_i$. Consequently, $SAG$ can be defined as a \textit{directed graph}: $SAG = (V, E)$, where $E$ is the above-mentioned set of ordered pairs $(v_i, v_j)$ and $V$ is a set of Wikipedia articles. The order of an edge indicates the direction of hyperlinks. After building $SAG$, we use a contrastive sampling strategy based on the graph. For each node in $SAG$, we define its content as query $D$ and define all its adjacent nodes as positive documents $d^+$. We randomly select other documents as $d^-$. The loss function of the LTM task is defined as:
-$$
-\mathcal{L}_{LTM} = -\log\left( \frac{\exp(\text{score}(D,d^+))}{\exp(\text{score}(D,d^+)) + \sum_{d \in S} \exp(\text{score}(D,d))} \right)
-$$
-where $d^+$ is the adjacent articles, $D$ is the content of the original article, and $S$ is the set of all negative articles.
-
-
-
-
-
-
+To this end, we designed the Long Texts Matching (LTM) task to encourage the Wikiformer to learn the relevance matching ability between two long documents. Initially, we transformed the complete Wikipedia corpus into a graph structure by leveraging the interconnections provided by the 'See Also' links. This graph is designated as the See Also Graph (SAG). Each hyperlink in the See Also section can be formally represented as $(v_i, v_j)$, which means that $v_j$ appears in the See Also section of $v_i$. Consequently, $SAG$ can be defined as a \textit{directed graph}: $SAG = (V, E)$, where $E$ is the above-mentioned set of ordered pairs $(v_i, v_j)$ and $V$ is a set of Wikipedia articles. The order of an edge indicates the direction of hyperlinks. After building $SAG$, we use a contrastive sampling strategy based on the graph. For each node in $SAG$, we define its content as query $D$ and define all its adjacent nodes as positive documents $d^+$. We randomly select other documents as $d^-$. After this contrastive sampling, we use contrastive learning to train the model based on the above data
 
 ![](https://github.com/oneal2000/Wikiformer/blob/main/pics/SAG.png)
 
