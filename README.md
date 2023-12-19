@@ -30,7 +30,13 @@ Our proposed method Wikiformer aims to customize a retrieval model for any corpu
 
 
 
-### Our methodology is effective for any Corpus that shares a structural resemblance with Wikipedia. Including:
+### Our methodology is effective for any Corpus that shares a structural resemblance with Wikipedia. 
+
+
+
+
+
+### Including:
 
 
 #### Academic Paper Corpus (LaTeX Format)
