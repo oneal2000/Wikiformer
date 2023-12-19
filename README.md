@@ -190,28 +190,22 @@ After building $WST$, we use a contrastive sampling strategy to construct pseudo
 
 
 We use a Transformer based PLM to compute the relevance score of a pseudo query-document pair:
-{\small
-\begin{equation}
-\label{equ_input}
+
 Input = [CLS] query [SEP] document [SEP] 
-\end{equation}
 
-\begin{equation}
-\label{equ_score}
 score(query,document) = MLP(Transformer(Input) ) 
-\end{equation}
-
-}
 
 \noindent where $Transformer(Input)$ is the vector representation of the "[CLS]" token. $MLP(\cdot)$ is a multi-layer perceptron that projects the [CLS] vector to a relevance score. For the loss function, we use the Softmax Cross Entropy Loss\cite{cao2007learning,ai2018learning,gao2021rethink} to optimize the Transformer based model, which is defined as:
 
-\begin{equation}
-    \label{eq:SRR}
-   \mathcal{L}_{SRR} = -\log_{}{    \frac{exp(score(q,d^+))}{exp(score(q,d^+))+\sum_{d\in S} exp(score(q,d))}} 
-\end{equation}
 
 
-\noindent where $q$, and $d^+$ are defined above and $S$ is the set of all negative passages generated from $WST$.
+
+   $\mathcal{L}_{SRR} = -\log_{}{    \frac{exp(score(q,d^+))}{exp(score(q,d^+))+\sum_{d\in S} exp(score(q,d))}}$
+
+
+
+
+where $q$, and $d^+$ are defined above and $S$ is the set of all negative passages generated from $WST$.
 
 
 
