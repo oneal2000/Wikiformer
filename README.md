@@ -167,7 +167,7 @@ If you find our work useful, please cite our paper :)
 
 ## Methodology
 
-**This section briefly introduces our method; for more details, please refer to our paper.**[Paper Link](https://arxiv.org/pdf/2312.10661.pdf)
+**This section briefly introduces our method; for more details, please refer to our paper.** [Paper Link](https://arxiv.org/pdf/2312.10661.pdf)
 
 ### SRR Task
 
@@ -193,11 +193,11 @@ After building $WST$, we use a contrastive sampling strategy to construct pseudo
 
 ### RWI Task
 
-RWI task is inspired by an IR axiom which assumes that the user’s query is the representative words extracted from the relevant documents. According to the Wikipedia structure, we regard the subtitle of each section as representative words, and then we sample pseudo query-document pair via a simple strategy based on the hierarchical heading (multi-level title) structure, as shown in the following figure.
+RWI task is inspired by an IR axiom which assumes that the user’s query is the representative words extracted from the relevant documents. According to the Wikipedia structure, we regard the subtitle of each section as representative words, and then we sample pseudo-query-document pair via a simple strategy based on the hierarchical heading (multi-level title) structure, as shown in the following figure.
 
 
 
-Specifically, pseudo query-document pairs are organized as follows: for each Wikipedia article, we first model it as the $WST$ structure. Then we add all nodes of $WST$ except the root node to the set $S$. A node $d_i$ is randomly selected from $S$, and we define the depth of this node in $WST$ as $n$. Traversing from the root node to node $d_i$, all the titles on the path are put together to form a query $q^+$. The content of the node $d_i$ is defined as $D$. For the negative queries, we randomly select $n-1$ nodes from $S$, and concatenate the main title and subtitles of the selected nodes to define it as $q^-$. After this contrastive sampling, we use contrastive learning to train the model based on the above data
+Specifically, pseudo-query-document pairs are organized as follows: for each Wikipedia article, we first model it as the $WST$ structure. Then we add all nodes of $WST$ except the root node to the set $S$. A node $d_i$ is randomly selected from $S$, and we define the depth of this node in $WST$ as $n$. Traversing from the root node to node $d_i$, all the titles on the path are put together to form a query $q^+$. The content of the node $d_i$ is defined as $D$. For the negative queries, we randomly select $n-1$ nodes from $S$, and concatenate the main title and subtitles of the selected nodes to define it as $q^-$. After this contrastive sampling, we use contrastive learning to train the model based on the above data
 
 ![](https://github.com/oneal2000/Wikiformer/blob/main/pics/RWI.png)
 
@@ -215,7 +215,21 @@ To this end, we designed the Long Texts Matching (LTM) task to encourage the Wik
 
 
 
+## Experiment Results
 
+| Model Type         | Model Name | MRR@10 (Zero-shot) | MRR@100 (Zero-shot) | N@10 (TREC DL 2019) | N@100 (TREC DL 2019) | MRR@10 (Fine-tuned) | MRR@100 (Fine-tuned) | N@10 (TREC DL 2019) | N@100 (TREC DL 2019) |
+| ------------------ | ---------- | ------------------ | ------------------- | ------------------- | -------------------- | ------------------- | -------------------- | ------------------- | -------------------- |
+| Traditional Models | BM25       | 0.2656             | 0.2767              | 0.5315              | 0.4996               | 0.2656              | 0.2767               | 0.5315              | 0.4996               |
+|                    | QL         | 0.2143             | 0.2268              | 0.5234              | 0.4983               | 0.2143              | 0.2268               | 0.5234              | 0.4983               |
+| Neural IR Models   | KNRM       | NA                 | NA                  | NA                  | NA                   | 0.1526              | 0.1685               | 0.3071              | 0.4591               |
+|                    | Conv-KNRM  | NA                 | NA                  | NA                  | NA                   | 0.1554              | 0.1792               | 0.3112              | 0.4762               |
+| Pre-trained Models | BERT       | 0.1684             | 0.1811              | 0.3407              | 0.4316               | 0.3826              | 0.3881               | 0.6540              | 0.5325               |
+|                    | PROP_WIKI  | 0.2205             | 0.2321              | 0.4712              | 0.4709               | 0.3866              | 0.3922               | 0.6399              | 0.5311               |
+|                    | PROP_MS    | 0.2585             | 0.2696              | 0.5203              | 0.4810               | 0.3930              | 0.3980               | 0.6425              | 0.5318               |
+|                    | Webformer  | 0.1664             | 0.1756              | 0.3758              | 0.4550               | 0.3984              | 0.4036               | 0.6479              | 0.5335               |
+|                    | HARP       | 0.2372             | 0.2465              | 0.5244              | 0.4721               | 0.3961              | 0.4012               | 0.6562              | 0.5337               |
+|                    | ARES       | 0.2736             | 0.2851              | 0.5736              | 0.4752               | 0.3995              | 0.4041               | 0.6505              | 0.5353               |
+| Our Approach       | Wikiformer | **0.2844**         | **0.2911**          | **0.5907**          | **0.5143**           | **0.4085**          | **0.4136**           | **0.6587**          | **0.5392**           |
 
 
 
