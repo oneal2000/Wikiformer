@@ -43,7 +43,7 @@ Our proposed method Wikiformer aims to customize a retrieval model for any corpu
 
 
 
-### Our methodology is effective for any Corpus that shares a structural resemblance with Wikipedia. 
+Our methodology is effective for any Corpus that shares a structural resemblance with Wikipedia. 
 
 
 
@@ -51,10 +51,9 @@ Our proposed method Wikiformer aims to customize a retrieval model for any corpu
 
 
 
-### Including:
+Including:
 
-
-#### Academic Paper Corpus (LaTeX Format)
+Academic Paper Corpus (LaTeX Format)
 
 ```latex
 \documentclass{article}
@@ -81,7 +80,7 @@ Further details about the methodology.
 \end{document}
 ```
 
-#### Web Corpus (HTML Format)
+Web Corpus (HTML Format)
 
 ```html
 <!DOCTYPE html>
@@ -102,7 +101,7 @@ Further details about the methodology.
 </html>
 ```
 
-#### Markdown Format
+Markdown Format
 
 ```markdown
 # Main Title
@@ -115,7 +114,7 @@ Details about section 1.
 Details about section 2. 
 ```
 
-#### XML Format
+XML Format
 
 ```xml
 <document>
@@ -170,7 +169,21 @@ If you find our work useful, please cite our paper :)
 
 ### SRR Task
 
+
+
+$ WST = <D, R>$, where $D$ is a finite set containing $n$ nodes, and $R$ is the root node of $ WST$. Each node in $D$ consists of two parts: the subtitle and its corresponding content. The root node $R$ contains the main title and the abstract of this article. Starting from the root node $R$, recursively take all the corresponding lower-level sections as its child nodes until every section in this article is added to the $WST$. 
+
+
+
+
+
 ![](https://github.com/oneal2000/Wikiformer/blob/main/pics/SRR.png)
+
+
+
+
+
+
 
 ### RWI Task
 
