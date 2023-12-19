@@ -34,7 +34,7 @@ Our proposed method Wikiformer aims to customize a retrieval model for any corpu
 
 
 
-![](https://github.com/oneal2000/Wikiformer/blob/main/pics/structure.png)
+![](https://github.com/oneal2000/Wikiformer/blob/main/pics/structure2.png)
 
 
 
