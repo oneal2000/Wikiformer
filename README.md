@@ -3,7 +3,7 @@
 
 **Wikiformer: Pre-training with Structured Information of Wikipedia for Ad-hoc Retrieval**
 
-
+[Paper Link](https://arxiv.org/pdf/2312.10661.pdf)
 
 ![](https://github.com/oneal2000/Wikiformer/blob/main/pics/logo.png)
 
