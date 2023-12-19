@@ -267,14 +267,16 @@ Demo data is included in this repository at `wikiformer/data/demo_data`
 
 #### SRR Task
 
-
+`wikiformer/code/SRR`
 
 #### RWI Task
 
-
+`wikiformer/code/RWI`
 
 #### ATI Task
 
-
+`wikiformer/code/ATI`
 
 #### LTM Task
+
+`wikiformer/code/LTM`
