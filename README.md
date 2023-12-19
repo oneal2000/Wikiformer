@@ -170,11 +170,11 @@ If you find our work useful, please cite our paper :)
 
 ### SRR Task
 
-![](https://github.com/oneal2000/Wikiformer/blob/main/pics/srr.png)
+![](https://github.com/oneal2000/Wikiformer/blob/main/pics/SRR.png)
 
 ### RWI Task
 
-![](https://github.com/oneal2000/Wikiformer/blob/main/pics/RWI_f.png)
+![](https://github.com/oneal2000/Wikiformer/blob/main/pics/RWI.png)
 
 ### ATI Task
 
