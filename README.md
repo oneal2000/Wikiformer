@@ -122,7 +122,20 @@ Details about section 2. As previously mentioned in [Section 1](#section-1).
 
 ## Citation
 
-If you find our work useful, please cite our paper.
+If you find our work useful, please cite our paper :)
+
+
+
+```
+@misc{su2023wikiformer,
+      title={Wikiformer: Pre-training with Structured Information of Wikipedia for Ad-hoc Retrieval}, 
+      author={Weihang Su and Qingyao Ai and Xiangsheng Li and Jia Chen and Yiqun Liu and Xiaolong Wu and Shengluan Hou},
+      year={2023},
+      eprint={2312.10661},
+      archivePrefix={arXiv},
+      primaryClass={cs.IR}
+}
+```
 
 
 
