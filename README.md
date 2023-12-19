@@ -43,8 +43,8 @@ In the design process, we will face the following challenges:
 
 
 ### Our Solution
-Our proposed method Wikiformer aims to customize a retrieval model for any corpus with structured information, without the need for manual supervision. Our advantages include:
-- No need for existing queries or manual annotations
+Our proposed method Wikiformer aims to customize a retrieval model for any corpus with structured information without manual supervision. Our advantages include:
+- There is no need for existing queries or manual annotations
 - Achieves SOTA performance
 - Broad applicability for many formats, including academic paper Corpus, Web Corpus, and Markdown.md, XML, etc.
 - Intuitive and simple method, easy to get started with, low-cost
@@ -241,7 +241,40 @@ To this end, we designed the Long Texts Matching (LTM) task to encourage the Wik
 
 
 
+## Usage
+
+### Requirements
+
+```
+python>=3.9
+torch>=1.6.0
+transformers>=4.0.0
+datasets>=1.1.3
+tqdm>=4.65.0 
+```
 
 
 
+### Pre-training Data
 
+For **Wikipedia**, download [the Wikidump](https://dumps.wikimedia.org/enwiki/) and reformat the text with [`WikiExtractor.py`](https://github.com/attardi/wikiextractor)
+
+Demo data is included in this repository at `wikiformer/data/demo_data`
+
+
+
+### Source Code for Each Task
+
+#### SRR Task
+
+
+
+#### RWI Task
+
+
+
+#### ATI Task
+
+
+
+#### LTM Task
