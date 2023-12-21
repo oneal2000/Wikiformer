@@ -20,13 +20,11 @@
 
 
 ```
-@misc{su2023wikiformer,
-      title={Wikiformer: Pre-training with Structured Information of Wikipedia for Ad-hoc Retrieval}, 
-      author={Weihang Su and Qingyao Ai and Xiangsheng Li and Jia Chen and Yiqun Liu and Xiaolong Wu and Shengluan Hou},
-      year={2023},
-      eprint={2312.10661},
-      archivePrefix={arXiv},
-      primaryClass={cs.IR}
+@article{su2023wikiformer,
+  title={Wikiformer: Pre-training with Structured Information of Wikipedia for Ad-hoc Retrieval},
+  author={Su, Weihang and Ai, Qingyao and Li, Xiangsheng and Chen, Jia and Liu, Yiqun and Wu, Xiaolong and Hou, Shengluan},
+  journal={arXiv preprint arXiv:2312.10661},
+  year={2023}
 }
 ```
 
